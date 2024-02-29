@@ -2,6 +2,8 @@ package main
 
 import (
 	"Amz/handler"
+	"Amz/refid"
+	"Amz/supplier"
 	"Amz/user"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -20,14 +22,25 @@ func main() {
 	fmt.Println("Koneksi Berhasil")
 
 	userRepository := user.NewRepository(db)
+	supplierRepository := supplier.NewRepository(db)
+	refidRepository := refid.NewRepository(db)
+
 	userService := user.NewService(userRepository)
+	supplierService := supplier.NewService(supplierRepository)
+	refidService := refid.NewService(refidRepository)
 
 	userHandler := handler.NewUserHandler(userService)
+	supplierHandler := handler.NewSupllierHandler(supplierService)
+	refidHandler := handler.NewRefIdHandler(refidService)
 
 	router := gin.Default()
 
 	api := router.Group("api/v1")
 	api.POST("/users", userHandler.RegisterUser)
+	api.POST("/supplier", supplierHandler.RegisterSupplier)
+	api.POST("/refid", refidHandler.RegisterRefId)
+	api.POST("/email_checkers", userHandler.CheckEmail)
+	api.GET("/users", userHandler.GetUsers)
 
 	router.Run()
 
