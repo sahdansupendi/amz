@@ -94,3 +94,25 @@ func (h *userHandler) GetUsers(c *gin.Context) {
 	response := helper.ApiResponse("List of users", http.StatusOK, "success", user.FormatUsers(users))
 	c.JSON(http.StatusOK, response)
 }
+
+func (h *userHandler) GetUser(c *gin.Context) {
+	var input user.GetUserInput
+
+	err := c.ShouldBindUri(&input)
+
+	if err != nil {
+		response := helper.ApiResponse("Failed to get detail of user", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	newUser, err := h.userService.GetUserByID(input)
+	if err != nil {
+		response := helper.ApiResponse("Failed to get detail user", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusOK, response)
+		return
+	}
+
+	response := helper.ApiResponse("user detail", http.StatusOK, "success", user.FormatListUsers(newUser))
+	c.JSON(http.StatusOK, response)
+}

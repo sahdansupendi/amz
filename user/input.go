@@ -10,3 +10,7 @@ type RegisterUserInput struct {
 type CheckEmailInput struct {
 	Email string `json:"email" binding:"required,email"`
 }
+
+type GetUserInput struct {
+	ID int `uri:"id" binding:"required"`
+}

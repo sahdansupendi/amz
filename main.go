@@ -41,6 +41,7 @@ func main() {
 	api.POST("/refid", refidHandler.RegisterRefId)
 	api.POST("/email_checkers", userHandler.CheckEmail)
 	api.GET("/users", userHandler.GetUsers)
+	api.GET("/users/:id", userHandler.GetUser)
 
 	router.Run()
 

@@ -6,6 +6,7 @@ type Service interface {
 	RegisterUser(input RegisterUserInput) (User, error)
 	IsEmailAvailable(input CheckEmailInput) (bool, error)
 	GetUsers(userID int) ([]User, error)
+	GetUserByID(input GetUserInput) (User, error)
 }
 
 type service struct {
@@ -56,15 +57,6 @@ func (s *service) IsEmailAvailable(input CheckEmailInput) (bool, error) {
 }
 
 func (s *service) GetUsers(userID int) ([]User, error) {
-	/*if userID != 0 {
-		users, err := s.repository.FindByID(userID)
-		if err != nil {
-			return users, err
-		}
-
-		return users, nil
-	}*/
-
 	users, err := s.repository.FindAll()
 	if err != nil {
 		return users, err
@@ -72,4 +64,14 @@ func (s *service) GetUsers(userID int) ([]User, error) {
 
 	return users, nil
 
+}
+
+func (s *service) GetUserByID(input GetUserInput) (User, error) {
+	user, err := s.repository.FindByID(input.ID)
+
+	if err != nil {
+		return user, err
+	}
+
+	return user, nil
 }

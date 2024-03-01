@@ -3,9 +3,10 @@ package user
 import "gorm.io/gorm"
 
 type Repository interface {
-	Save(user User) (User, error)
-	FindByEmail(email string) (User, error)
 	FindAll() ([]User, error)
+	FindByEmail(email string) (User, error)
+	Save(user User) (User, error)
+	FindByID(ID int) (User, error)
 }
 
 type repository struct {
@@ -45,4 +46,15 @@ func (r *repository) FindAll() ([]User, error) {
 	}
 
 	return users, nil
+}
+
+func (r *repository) FindByID(ID int) (User, error) {
+	var user User
+	err := r.db.Where("id = ?", ID).Find(&user).Error
+
+	if err != nil {
+		return user, err
+	}
+
+	return user, nil
 }
