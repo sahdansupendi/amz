@@ -19,3 +19,23 @@ func FormatSupplier(supplier Supplier) SupplierFormatter {
 
 	return formatter
 }
+
+func FormatListSupplier(supplier Supplier) SupplierFormatter {
+	supplierFormatter := SupplierFormatter{}
+	supplierFormatter.ID = supplier.ID
+	supplierFormatter.Name = supplier.NamaSupplier
+	supplierFormatter.NoHp = supplier.NoHp
+	supplierFormatter.Email = supplier.Email
+	return supplierFormatter
+}
+
+func FormatSuppliers(suppliers []Supplier) []SupplierFormatter {
+	suppliersFormatter := []SupplierFormatter{}
+
+	for _, supplier := range suppliers {
+		supplierFormatter := FormatListSupplier(supplier)
+		suppliersFormatter = append(suppliersFormatter, supplierFormatter)
+	}
+
+	return suppliersFormatter
+}

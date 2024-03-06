@@ -2,6 +2,7 @@ package supplier
 
 type Service interface {
 	RegisterSupplier(input RegisterSupllierInput) (Supplier, error)
+	GetSuppliers(supplierID int) ([]Supplier, error)
 }
 
 type service struct {
@@ -27,4 +28,12 @@ func (s *service) RegisterSupplier(input RegisterSupllierInput) (Supplier, error
 
 	return newsupplier, nil
 
+}
+
+func (s *service) GetSuppliers(supplierID int) ([]Supplier, error) {
+	supplier, err := s.repository.FindAll()
+	if err != nil {
+		return supplier, err
+	}
+	return supplier, nil
 }

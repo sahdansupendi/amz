@@ -42,6 +42,7 @@ func main() {
 	api.POST("/email_checkers", userHandler.CheckEmail)
 	api.GET("/users", userHandler.GetUsers)
 	api.GET("/users/:id", userHandler.GetUser)
+	api.GET("/suppliers", supplierHandler.GetSuppliers)
 
 	router.Run()
 
